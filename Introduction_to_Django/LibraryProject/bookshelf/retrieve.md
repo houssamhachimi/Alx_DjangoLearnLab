@@ -1,5 +1,7 @@
+# Retrieving Books
 
-To retrieve all books from the database:
+Get a specific book by title:
 
 ```python
-Book.objects.all()
+Book.objects.get(title="1984")
+
