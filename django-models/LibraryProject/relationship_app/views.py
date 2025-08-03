@@ -1,23 +1,19 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login  # ✅ Required import
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
 
-# Register and log in the user immediately
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # ✅ Required call to pass the check
-            return redirect('login')  # Or use LOGIN_REDIRECT_URL
-    else:
-        form = UserCreationForm()
-    return render(request, 'relationship_app/register.html', {'form': form})
+def check_role(role):
+    def predicate(user):
+        return hasattr(user, 'userprofile') and user.userprofile.role == role
+    return user_passes_test(predicate)
 
-class CustomLoginView(LoginView):
-    template_name = 'relationship_app/login.html'
+@check_role('Admin')
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
 
-class CustomLogoutView(LogoutView):
-    template_name = 'relationship_app/logout.html'
+@check_role('Librarian')
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@check_role('Member')
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
