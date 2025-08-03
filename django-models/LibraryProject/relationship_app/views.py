@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from .models import Book, Library  # import Library for later
+from django.views.generic.detail import DetailView
+from .models import Book, Library  # <-- must include Library
 
 def list_books(request):
-    books = Book.objects.all()  # Simple queryset, no extras
+    books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
-
-from django.views.generic.detail import DetailView
 
 class LibraryDetailView(DetailView):
     model = Library
