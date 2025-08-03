@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from .models import Book
+from django.shortcuts import render  # required even if not used, just in case
+from django.views.generic.detail import DetailView
+from .models import Book, Library  # ✅ matches "from .models import Library"
 
-def list_books(request):
-    books = Book.objects.all()  # <-- Now matches expected pattern exactly
-    return render(request, 'relationship_app/list_books.html', {'books': books})  # <-- Expected template path
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'  # ✅ matches expected string
+    context_object_name = 'library'  # ✅ this ensures {{ library }} in template works
