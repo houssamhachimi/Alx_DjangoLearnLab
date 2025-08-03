@@ -1,23 +1,23 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 
-def is_admin(user):
+def admin_check(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-def is_librarian(user):
+def librarian_check(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-def is_member(user):
+def member_check(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-@user_passes_test(is_admin)
+@user_passes_test(admin_check)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
-@user_passes_test(is_librarian)
+@user_passes_test(librarian_check)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
-@user_passes_test(is_member)
+@user_passes_test(member_check)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
