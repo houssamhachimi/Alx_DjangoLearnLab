@@ -1,30 +1,17 @@
-# relationship_app/views.py
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 
-
-# --- Role checks ---
-def is_admin(user):
-    return user.is_authenticated and hasattr(user, "userprofile") and user.userprofile.role == "Admin"
-
-def is_librarian(user):
-    return user.is_authenticated and hasattr(user, "userprofile") and user.userprofile.role == "Librarian"
-
-def is_member(user):
-    return user.is_authenticated and hasattr(user, "userprofile") and user.userprofile.role == "Member"
-
-
-# --- Role-based views ---
-@user_passes_test(is_admin)
+# Admin view
+@user_passes_test(lambda u: u.is_authenticated and hasattr(u, "userprofile") and u.userprofile.role == "Admin")
 def admin_view(request):
     return render(request, "relationship_app/admin_view.html")
 
-
-@user_passes_test(is_librarian)
+# Librarian view
+@user_passes_test(lambda u: u.is_authenticated and hasattr(u, "userprofile") and u.userprofile.role == "Librarian")
 def librarian_view(request):
     return render(request, "relationship_app/librarian_view.html")
 
-
-@user_passes_test(is_member)
+# Member view
+@user_passes_test(lambda u: u.is_authenticated and hasattr(u, "userprofile") and u.userprofile.role == "Member")
 def member_view(request):
     return render(request, "relationship_app/member_view.html")
