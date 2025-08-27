@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     "accounts",
-    'bookshelf',
+    'LibraryProject.bookshelf',
 ]
 
 
