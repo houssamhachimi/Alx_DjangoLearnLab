@@ -28,7 +28,9 @@ INSTALLED_APPS = [
 
     # Custom apps
     "accounts",
+    'bookshelf',
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -44,20 +46,19 @@ ROOT_URLCONF = "advanced_features_and_security.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # custom templates folder if needed
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],  # can stay empty, since we are using app-level templates
+        'APP_DIRS': True,  # this must be True to find templates in apps
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
-
 WSGI_APPLICATION = "advanced_features_and_security.wsgi.application"
 
 
